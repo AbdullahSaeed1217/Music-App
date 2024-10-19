@@ -1,0 +1,22 @@
+version: '3'
+services:
+  mongo:
+    image: mongo
+    ports:
+      - "27019:27019"
+    volumes:
+      - ./data:/data/db
+
+  backend:
+    build: ./music_app_backend
+    ports:
+      - "7000:7000"
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./music_app
+    ports:
+      - "4000:4000"
+    depends_on:
+      - backend
